@@ -61,8 +61,18 @@ template <typename container_t> void test_container() {
     display(z);
   }
   {
+    std::cout << "[2 by val]    2*x + y     \t";
+    container_t z = axpy_by_value(2.0, x, y);
+    display(z);
+  }
+  {
     std::cout << "[a by ref]    a*x + y     \t";
     container_t z = axpy_by_reference(a, x, y);
+    display(z);
+  }
+  {
+    std::cout << "[2 by ref]    2*x + y     \t";
+    container_t z = axpy_by_reference(2.0, x, y);
     display(z);
   }
   {
