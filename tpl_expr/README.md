@@ -100,5 +100,53 @@ et ce produit $ab$ pose problème. La première implémentation que nous proposo
   }
 ```
 
-Dans ce cas, seul `std::valarray` donne des résultats différents
+On obtient alors les résultats suivants selon le type de conteneur :
 
+* `std::valarray<double>` :
+
+  ```
+    [a, b by ref] a*b*x + y   	nan nan nan
+  ```
+
+  les variables $a$ et $b$ sont passées par référence mais le comportement n'est pas celui attendu, en effet il semble que le calcul `a * b` soit prioritaire et ne donne au système d'expression qu'une valeur (ou référence temporaire n'existant que dans la fonction ?) du produit, on semble pouvoir décomposer le calcul dans les 3 étapes suivantes :
+
+  ```
+    1 : a*b
+      |
+  /------\
+    a * b * x + y;
+  \----------/
+        |
+      2 : (a*b) * x
+  \--------------/
+          |
+        3 : ((a*b)*x) + y
+  ```
+* tous les autres :
+
+  ```
+    [a, b by ref] a*b*x + y   	0 3 6
+  ```
+
+  dans les autres systèmes d'expressions l'opération `a*b` n'est pas évaluée avant d'entrer dans le système d'expression de la bibliothèque en question et on obtient le même résultat.
+
+
+### Comment contourner ce problème ?
+
+Deux solutions ont été trouvées pour résoudre ce problème avec le `std::valarray<double>`, forcer une autre décomposition de l'expression en calculant :
+
+$$
+  a \cdot ( b \cdot x) + y
+$$
+
+(effectué dans la fonction `abxpy_by_reference2`) ou alors d'éviter d'avoir deux nombres flottants à côté (ce qui revient au même) :
+
+$$
+  a \cdot x \cdot b + y
+$$
+
+(effectué dans la fonction `axbpy_by_reference`) dans ces deux cas l'expression du `std::valarray<double>` redevient juste.
+
+### Petit faits amusants
+
+Nous avions vu que xtensor n'avait pas de résultats corrects lors que $a$ était passé par valeur dans le cadre du `axpy`, mais dans le contexte du `abxpy` ce résultat devient juste. Je n'explique pas ce comportement.
