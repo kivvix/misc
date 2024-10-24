@@ -1,0 +1,9 @@
+name: misc-tpl_expr
+
+channels:
+  - conda-forge
+dependencies:
+  - make
+  - eigen
+  - xtensor
+  - cxx-compiler
