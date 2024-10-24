@@ -1,5 +1,19 @@
 # À propos d'expressions templates en C++
 
+Pour exécuter le code associé :
+
+```sh
+  conda env create -f environment.yml
+  conda activate misc-tpl_expr
+```
+
+puis on compile et on exécute le code, simplement avec :
+
+```sh
+  make
+```
+
+
 ## Cas classique d'un `axpy`
 
 Prenons comme exemple une fonction retournant l'expression `axpy` :
