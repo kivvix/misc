@@ -24,7 +24,7 @@ $$
 
 où $x$ et $y$ sont des vecteurs et $a$ un réel. Pour construire un arbre d'expressions on peut se tourner soit vers la STL avec le `std::valarray`, soit une bibliothèque tierce telle que Eigen ou xtensor.
 
-Dans toutes nos fonctions, $x$ et $y$ seront passés par références constantes, on s'intéresse au passe de $a$, par valeur ou référence.
+Dans toutes nos fonctions, $x$ et $y$ seront passés par références constantes, on s'intéresse au passage de $a$ par valeur ou référence.
 
 Ainsi on écrit 2 fonctions, une `axpy_by_value` où la variable $a$ est passée par valeur, et une `axpy_by_reference` où $a$ est passée par référence constante :
 
@@ -41,14 +41,14 @@ Ainsi on écrit 2 fonctions, une `axpy_by_value` où la variable $a$ est passée
   }
 ```
 
-Puisque ces fonctions prennent une valeur ou une référence constante, il est possible de les appeler de la sorte :
+Puisque ces fonctions prennent une valeur ou une référence constante il est possible de les utiliser avec une variable :
 
 ```cpp
   double a = 2.0;
   axpy_by_***(a, x, y);
 ```
 
-ou 
+ou une valeur :
 
 ```cpp
   axpy_by_***(2.0, x, y);
@@ -64,7 +64,7 @@ On obtient alors les résultats suivants selon le type de conteneur :
     [2 by ref]    2*x + y     	0 3 6
   ```
 
-  il est donc important pour que l'expression soit bien construite avec de passer $a$ par référence.
+  il est donc important pour que l'expression soit bien construite de passer $a$ par référence.
 
 * `Eigen::Vector<double, 3>` (les résultats sont les mêmes avec un `Eigen::VectorXd`) :
   ```
@@ -74,7 +74,7 @@ On obtient alors les résultats suivants selon le type de conteneur :
     [2 by ref]    2*x + y     	0 3 6
   ```
 
-  on observe pas de différence, Eigen devant effectuer une copie des nombres flottants dans ses expressions.
+  on observe pas de différence, Eigen stocke sans doute les nombres flottants dans ses expressions.
 
 * `xt::xarray<double>` :
   ```
@@ -84,7 +84,7 @@ On obtient alors les résultats suivants selon le type de conteneur :
     [2 by ref]    2*x + y     	0 3 6
   ```
 
-  lors que $a$ est passé par valeur, celui-ci semble initialisé à sa valeur par défaut, c'est-à-dire `0.`, mais l'erreur peut être compliquée à débusquer dans un code de calcul.
+  lorsque $a$ est passé par valeur, celui-ci semble initialisé à sa valeur par défaut, c'est-à-dire `0.`, mais l'erreur peut être compliquée à débusquer dans un code de calcul.
 
 * `xt::xtensor_fixed<double, xt::xshape<1, 3>>` :
   ```
@@ -104,7 +104,7 @@ $$
   a \cdot b \cdot x + y
 $$
 
-et ce produit $ab$ pose problème. La première implémentation que nous proposons, au vu des résultats précédents, de passer $a$ et $b$ par référence, le code s'écrit comme suit :
+et ce produit $ab$ pose problème. La première implémentation que nous proposons, au vu des résultats précédents, est de passer $a$ et $b$ par référence, le code s'écrit comme suit :
 
 ```cpp
   template <typename container_t, typename value_t>
@@ -122,7 +122,7 @@ On obtient alors les résultats suivants selon le type de conteneur :
     [a, b by ref] a*b*x + y   	nan nan nan
   ```
 
-  les variables $a$ et $b$ sont passées par référence mais le comportement n'est pas celui attendu, en effet il semble que le calcul `a * b` soit prioritaire et ne donne au système d'expression qu'une valeur (ou référence temporaire n'existant que dans la fonction ?) du produit, on semble pouvoir décomposer le calcul dans les 3 étapes suivantes :
+  les variables $a$ et $b$ sont passées par référence mais le comportement n'est pas celui attendu. En effet il semble que le calcul `a * b` soit prioritaire et ne donne au système d'expression qu'une valeur (ou référence temporaire n'existant que dans la fonction ?) du produit. On semble pouvoir décomposer le calcul dans les 3 étapes suivantes :
 
   ```
     1 : a*b
@@ -161,6 +161,6 @@ $$
 
 (effectué dans la fonction `axbpy_by_reference`) dans ces deux cas l'expression du `std::valarray<double>` redevient juste.
 
-### Petit faits amusants
+### Petit fait amusant
 
 Nous avions vu que xtensor n'avait pas de résultats corrects lors que $a$ était passé par valeur dans le cadre du `axpy`, mais dans le contexte du `abxpy` ce résultat devient juste. Je n'explique pas ce comportement.
