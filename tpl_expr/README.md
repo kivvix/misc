@@ -124,6 +124,23 @@ On obtient alors les résultats suivants selon le type de conteneur :
 
   les variables $a$ et $b$ sont passées par référence mais le comportement n'est pas celui attendu. En effet il semble que le calcul `a * b` soit prioritaire et ne donne au système d'expression qu'une valeur (ou référence temporaire n'existant que dans la fonction ?) du produit. On semble pouvoir décomposer le calcul dans les 3 étapes suivantes :
 
+  ```mermaid
+  graph TD;
+      a["a"]
+      b["b"]
+      x["x"]
+      y["y"]
+      ab["a*b"]
+      abx["a*b*x"]
+      abxpy["a*b*x+y"]
+      a --> ab
+      b --> ab
+      ab --> abx
+      x --> abx
+      abx --> abxpy
+      y --> abxpy
+  ```
+
   ```
     1 : a*b
       |
