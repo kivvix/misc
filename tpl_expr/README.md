@@ -141,18 +141,6 @@ On obtient alors les résultats suivants selon le type de conteneur :
       y --> abxpy
   ```
 
-  ```
-    1 : a*b
-      |
-  /------\
-    a * b * x + y;
-  \----------/
-        |
-      2 : (a*b) * x
-  \--------------/
-          |
-        3 : ((a*b)*x) + y
-  ```
 * tous les autres :
 
   ```
