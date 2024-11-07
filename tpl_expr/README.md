@@ -130,9 +130,9 @@ On obtient alors les résultats suivants selon le type de conteneur :
       b["b"]
       x["x"]
       y["y"]
-      ab["a*b"]
-      abx["a*b*x"]
-      abxpy["a*b*x+y"]
+      ab["`a*b`"]
+      abx["`a*b*x`"]
+      abxpy["$a\cdot b\cdot x+y$"]
       a --> ab
       b --> ab
       ab --> abx
