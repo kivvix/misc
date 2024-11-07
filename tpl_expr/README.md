@@ -135,7 +135,7 @@ On obtient alors les résultats suivants selon le type de conteneur :
       abxpy["3 : ((a * b) * x) + y"]
       a --> ab
       b --> ab
-      ab --> abx
+      ab -- temporary value --> abx
       x --> abx
       abx --> abxpy
       y --> abxpy
