@@ -169,3 +169,67 @@ $$
 ### Petit fait amusant
 
 Nous avions vu que xtensor n'avait pas de résultats corrects lors que $a$ était passé par valeur dans le cadre du `axpy`, mais dans le contexte du `abxpy` ce résultat devient juste. Je n'explique pas ce comportement.
+
+### Tous les résultats
+
+```
+std::valarray<double>:
+[a by val]    a*x + y     	nan nan nan
+[2 by val]    2*x + y     	nan nan nan
+[a by ref]    a*x + y     	0 3 6
+[2 by ref]    2*x + y     	0 3 6
+[a, b by val] a*b*x + y   	nan nan nan
+[a, b by ref] a*b*x + y   	nan nan nan
+[a, b by ref] a*(b*x) + y 	0 3 6
+[a, b by ref] a*x*b + y   	0 3 6
+
+Eigen::Vector<double, 3>:
+[a by val]    a*x + y     	0 3 6
+[2 by val]    2*x + y     	0 3 6
+[a by ref]    a*x + y     	0 3 6
+[2 by ref]    2*x + y     	0 3 6
+[a, b by val] a*b*x + y   	0 3 6
+[a, b by ref] a*b*x + y   	0 3 6
+[a, b by ref] a*(b*x) + y 	0 3 6
+[a, b by ref] a*x*b + y   	0 3 6
+
+Eigen::VectorXd:
+[a by val]    a*x + y     	0 3 6
+[2 by val]    2*x + y     	0 3 6
+[a by ref]    a*x + y     	0 3 6
+[2 by ref]    2*x + y     	0 3 6
+[a, b by val] a*b*x + y   	0 3 6
+[a, b by ref] a*b*x + y   	0 3 6
+[a, b by ref] a*(b*x) + y 	0 3 6
+[a, b by ref] a*x*b + y   	0 3 6
+
+xt::xarray<double>:
+[a by val]    a*x + y     	0 1 2
+[2 by val]    2*x + y     	0 1 2
+[a by ref]    a*x + y     	0 3 6
+[2 by ref]    2*x + y     	0 3 6
+[a, b by val] a*b*x + y   	0 3 6
+[a, b by ref] a*b*x + y   	0 3 6
+[a, b by ref] a*(b*x) + y 	0 3 6
+[a, b by ref] a*x*b + y   	0 3 6
+
+xt::xtensor_fixed<double, xt::xshape<1, 3>>:
+[a by val]    a*x + y     	nan nan nan
+[2 by val]    2*x + y     	nan nan nan
+[a by ref]    a*x + y     	0 3 6
+[2 by ref]    2*x + y     	0 3 6
+[a, b by val] a*b*x + y   	0 3 6
+[a, b by ref] a*b*x + y   	0 3 6
+[a, b by ref] a*(b*x) + y 	0 3 6
+[a, b by ref] a*x*b + y   	0 3 6
+
+xt::xtensor_fixed<double, xt::xshape<3, 1>>:
+[a by val]    a*x + y     	nan nan nan
+[2 by val]    2*x + y     	nan nan nan
+[a by ref]    a*x + y     	0 3 6
+[2 by ref]    2*x + y     	0 3 6
+[a, b by val] a*b*x + y   	0 3 6
+[a, b by ref] a*b*x + y   	0 3 6
+[a, b by ref] a*(b*x) + y 	0 3 6
+[a, b by ref] a*x*b + y   	0 3 6
+```
