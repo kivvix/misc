@@ -13,7 +13,7 @@
 
 #include <xtensor/xarray.hpp>
 
-#include "dujour"
+#include "dujour.hpp"
 
 template <typename container_t, typename value_t>
 auto abxpy_auto(value_t const &a, value_t const &b, container_t const &x,
