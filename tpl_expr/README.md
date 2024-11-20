@@ -16,7 +16,7 @@ puis on compile et on exécute le code, simplement avec :
 Une partie s'intéresse également au temps de restitution de ces expressions, pour l'exécuter il suffit de faire :
 
 ```sh
-  make time
+  make time.png
 ```
 
 Le travail sur ces expressions templates est synthétisé dans plusieurs fichiers Markdown :
