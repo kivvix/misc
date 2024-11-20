@@ -5,11 +5,17 @@ OPTI_LEVEL = -O2
 
 all: main-run
 
-%.exe: %.cc
-	$(CXX) $(OPTI_LEVEL) -I $(INCLUDE_EIGEN) -I $(INCLUDE_XTENSOR) $< -o $@
+%.out: %.cc
+	$(CXX) $(OPTI_LEVEL) -std=c++20 -g -pg -I $(INCLUDE_EIGEN) -I $(INCLUDE_XTENSOR) $< -o $@
 
-%-run: %.exe
+%-run: %.out
 	./$<
 
+time.txt: time.out
+	./$< > $@
+
+time.png: time.txt plot.plt
+	gnuplot plot.plt
+
 clean:
-	rm -f *.exe *.txt
+	rm -f *.out *.txt

@@ -26,18 +26,8 @@ container_t abxpy_container(value_t const &a, value_t const &b,
 }
 ```
 
-On lance 50000 fois ce test, avec des vecteurs de taille 1000, et on obtient, pour différents types de conteneurs :
+On lance 5000 fois ce test, avec des vecteurs de différentes tailles allant de 50 à 1'000'000 (voir [time.cc](time.cc) pour plus de détails). Et on obtient les résultats suivants, synthétisé dans le graphique suivant.
 
-```
-std::valarray<double>:
-abxpy_container 2.17358 50000
-abxpy_auto 3.74757 50000
+![Temps d'exécution pour différents types de conteneurs](time.png)
 
-xt::xarray<double>:
-abxpy_container 0.183311 50000
-abxpy_auto 0.223934 50000
-
-Eigen::VectorXd:
-abxpy_container 2.71495 50000
-abxpy_auto 4.42228 50000
-```
+En gros, dans notre cas, puisqu'on ne modifie pas l'expression $u^n + \Delta t \sum_j a_{ij}k_j$ nous ne voyons pas de réelle différence sur le temps de restitution de ces calculs entre renvoyer un conteneur avec les valeurs ou une expression. Pour des tailles inférieures à 1000, on peut observer que le temps de restitution est plus élevé avec une expression qu'un conteneur, au delà on a toujours un léger gain à renvoyer une expression.
