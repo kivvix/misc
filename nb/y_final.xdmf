@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<Xdmf>
+	<Domain>
+		<Grid Name="mesh">
+			<Topology TopologyType="Quadrilateral" NumberOfElements="9370">
+				<DataItem Dimensions="37480" Format="HDF">y_final.h5:/mesh/connectivity</DataItem>
+			</Topology>
+			<Geometry GeometryType="XYZ">
+				<DataItem Dimensions="30207" Format="HDF">y_final.h5:/mesh/points</DataItem>
+			</Geometry>
+			<Attribute Name="u_0" Center="Cell">
+				<DataItem Dimensions="9370" Format="HDF" Precision="8">y_final.h5:/mesh/fields/u_0</DataItem>
+			</Attribute>
+			<Attribute Name="u_1" Center="Cell">
+				<DataItem Dimensions="9370" Format="HDF" Precision="8">y_final.h5:/mesh/fields/u_1</DataItem>
+			</Attribute>
+			<Attribute Name="u_2" Center="Cell">
+				<DataItem Dimensions="9370" Format="HDF" Precision="8">y_final.h5:/mesh/fields/u_2</DataItem>
+			</Attribute>
+			<Attribute Name="level" Center="Cell">
+				<DataItem Dimensions="9370" Format="HDF" Precision="8">y_final.h5:/mesh/fields/level</DataItem>
+			</Attribute>
+		</Grid>
+	</Domain>
+</Xdmf>
